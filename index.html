@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Velvet Winter Lounge</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="debug.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="social.css">
+  <link rel="stylesheet" href="games.css">
+</head>
+
+<body>
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Preparing the lounge...</p>
+  </div>
+  
+  <!-- Debug Console -->
+  <div id="debugConsole" class="debug-console hidden">
+    <div class="debug-header">
+      <span>🔧 Debug Console</span>
+      <div>
+        <button onclick="copyDebugLogs()">Copy</button>
+        <button onclick="clearDebugLogs()">Clear</button>
+        <button onclick="toggleDebugConsole()">Hide</button>
+      </div>
+    </div>
+    <div id="debugLogs" class="debug-logs"></div>
+  </div>
+  <button id="showConsoleBtn" class="show-console-btn" onclick="toggleDebugConsole()">🔧 Show Console</button>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Particles -->
+  <div class="bg-particles" id="particles"></div>
+  
+  <!-- AUTH PAGE -->
+  <section id="page-auth" class="page auth-page hidden">
+    <div class="auth-container">
+      <div class="auth-header">
+        <div class="icon">❄</div>
+        <h1>The Velvet <span>Winter</span></h1>
+        <p>Sign in to join the celebration</p>
+      </div>
+      
+      <div class="glass-card auth-card">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+          <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+        </div>
+        
+        <div id="authError" class="auth-error hidden"></div>
+        
+        <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="loginEmail" class="input-elegant" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" class="input-elegant" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-gold" id="loginBtn">Sign In</button>
+        </form>
+        
+        <form id="signupForm" class="auth-form hidden" onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label>Display Name</label>
+            <input type="text" id="signupName" class="input-elegant" placeholder="Your name or alias" required maxlength="20">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="signupEmail" class="input-elegant" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="signupPassword" class="input-elegant" placeholder="Min 6 characters" required minlength="6">
+          </div>
+          <button type="submit" class="btn-gold" id="signupBtn">Create Account</button>
+        </form>
+        
+        <div class="auth-divider">or continue with</div>
+        
+        <div class="social-buttons">
+          <button onclick="handleGoogleLogin()" class="btn-google" id="googleBtn">
+            <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Sign in with Google
+          </button>
+          <button onclick="handleGuestLogin()" class="btn-guest" id="guestBtn">Continue as Guest</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAVIGATION -->
+<nav id="navbar" class="navbar hidden">
+  <div class="nav-container">
+    <!-- Left: Hamburger (mobile) -->
+    <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      ☰
+    </button>
+    
+    <!-- Center: Logo -->
+    <a href="#" onclick="showPage('landing')" class="nav-logo">✧ Velvet Winter</a>
+    
+    <!-- Desktop nav links -->
+    <div class="nav-links-desktop">
+      <a href="#" onclick="showPage('lounge')" class="nav-link">Lounge</a>
+      <a href="#" onclick="showPage('guests')" class="nav-link">Guests</a>
+      <a href="#" onclick="showPage('games')" class="nav-link">Games</a>
+      <a href="#" onclick="showPage('rules')" class="nav-link">Rules</a>
+      <a href="#" onclick="showPage('admin')" class="nav-link" id="adminNavLink" style="display:none;">Admin</a>
+      <div class="nav-user">
+        <button class="notifications-btn" onclick="toggleNotifications()">
+          🔔
+          <span id="notifBadge" class="notif-badge hidden">0</span>
+        </button>
+        <img id="navAvatar" class="nav-avatar hidden" src="" alt="Avatar" onclick="showGuestProfile(currentUser?.uid)">
+        <span id="navUserName" class="nav-user-name"></span>
+        <button onclick="handleLogout()" class="btn-logout">Sign Out</button>
+      </div>
+    </div>
+    
+    <!-- Mobile: Right side controls -->
+    <div class="nav-user-mobile">
+      <button class="notifications-btn-mobile" onclick="toggleNotifications()">
+        🔔
+        <span id="notifBadgeMobile" class="notif-badge hidden">0</span>
+      </button>
+      <img id="navAvatarMobile" class="nav-avatar-mobile hidden" src="" alt="Avatar" onclick="showGuestProfile(currentUser?.uid)">
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer Overlay -->
+<div id="navDrawerOverlay" class="nav-drawer-overlay" onclick="closeMobileMenu()"></div>
+
+<!-- Mobile Drawer -->
+<div id="navDrawer" class="nav-drawer">
+  <div class="nav-drawer-header">
+    <span class="nav-drawer-logo">✧ Velvet Winter</span>
+    <button class="nav-drawer-close" onclick="closeMobileMenu()">&times;</button>
+  </div>
+  
+  <div class="nav-drawer-links">
+    <a href="#" onclick="navigateFromDrawer('lounge')" class="nav-drawer-link">
+      <span class="link-icon">🛋️</span>
+      <span class="link-text">Lounge</span>
+    </a>
+    <a href="#" onclick="navigateFromDrawer('guests')" class="nav-drawer-link">
+      <span class="link-icon">👥</span>
+      <span class="link-text">Guests</span>
+    </a>
+    <a href="#" onclick="navigateFromDrawer('games')" class="nav-drawer-link">
+      <span class="link-icon">🎲</span>
+      <span class="link-text">Games</span>
+    </a>
+    <a href="#" onclick="navigateFromDrawer('rules')" class="nav-drawer-link">
+      <span class="link-icon">📜</span>
+      <span class="link-text">House Rules</span>
+    </a>
+    <a href="#" onclick="navigateFromDrawer('admin')" class="nav-drawer-link" id="adminDrawerLink" style="display:none;">
+      <span class="link-icon">⚙️</span>
+      <span class="link-text">Admin Panel</span>
+    </a>
+  </div>
+  
+  <div class="nav-drawer-footer">
+    <button onclick="handleLogout()" class="nav-drawer-logout">
+      <span>🚪</span>
+      <span>Sign Out</span>
+    </button>
+  </div>
+</div>
+  
+  <!-- LANDING PAGE -->
+  <section id="page-landing" class="page landing hidden">
+    <div class="landing-content">
+      <div class="landing-icon">❄</div>
+      <h1 id="landingTitle">The Velvet<br><span>Winter Lounge</span></h1>
+      <p id="landingTagline" class="landing-tagline">An evening of warmth, connection & playful elegance</p>
+      <p id="landingDate" class="landing-date">December 21st, 2024 · 8PM</p>
+      <div id="countdownContainer" class="countdown-container" style="display:none;">
+        <div id="countdownDisplay"></div>
+      </div>
+      <button onclick="enterParty()" class="btn-gold">Enter the Party</button>
+      <p class="landing-hint">21+ · Respect · Consent · Connection</p>
+    </div>
+    <span class="snowflake" style="top:15%;left:10%;">❅</span>
+    <span class="snowflake" style="top:25%;right:15%;animation-delay:-5s;">❆</span>
+    <span class="snowflake" style="bottom:20%;left:20%;animation-delay:-10s;">❄</span>
+  </section>
+  
+  <!-- LOUNGE PAGE -->
+  <section id="page-lounge" class="page lounge hidden">
+    <div class="lounge-container">
+      <div class="lounge-header">
+        <img id="loungeAvatar" class="lounge-avatar hidden" src="" alt="Avatar">
+        <h1>Welcome to the Lounge</h1>
+        <div id="greeting" class="greeting"></div>
+        <button id="editProfileBtn" class="btn-text hidden" onclick="showEditProfile()" style="margin-top: 0.5rem;">✏️ Edit Profile</button>
+      </div>
+      
+      <div id="profile-card" class="glass-card profile-card hidden">
+        <h2>Complete Your Profile</h2>
+        <p>Introduce yourself to the party</p>
+        <div class="avatar-upload-container">
+          <div id="avatarPlaceholder" class="avatar-placeholder">👤</div>
+          <img id="avatarPreview" class="avatar-preview hidden" src="" alt="Avatar preview">
+          <label class="avatar-upload-btn" id="avatarUploadBtn">
+            📷 Choose Photo
+            <input type="file" accept="image/*" onchange="handleAvatarSelect(event)">
+          </label>
+          <div id="avatarProgress" class="avatar-upload-progress hidden">
+            <div id="avatarProgressBar" class="avatar-upload-progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <input type="text" id="displayNameInput" placeholder="Your name or alias..." maxlength="20" class="input-elegant">
+        <textarea id="bioInput" placeholder="A short bio for the guest directory... (optional)" class="input-elegant" maxlength="150" style="width:100%; padding:1rem; border-radius:0.75rem; resize:none; height:80px; margin-bottom:1rem; font-size:0.95rem;"></textarea>
+        <label style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.5rem; cursor:pointer; font-size:0.9rem; color:rgba(245,240,232,0.7);">
+          <input type="checkbox" id="isVisibleInput" checked style="width:18px; height:18px; accent-color:var(--champagne);">
+          Show me in the guest directory
+        </label>
+        <button onclick="saveProfile()" class="btn-gold">Save & Continue</button>
+      </div>
+      
+      <div id="activity-cards" class="activity-cards hidden">
+        <div onclick="showPage('guests')" class="glass-card activity-card">
+          <div class="icon">👥</div>
+          <h3>Guest Directory</h3>
+          <p>See who's joining the party tonight and connect with fellow guests.</p>
+          <span class="cta">Browse Guests →</span>
+        </div>
+        <div onclick="showPage('games')" class="glass-card activity-card">
+          <div class="icon">🎲</div>
+          <h3>Party Games</h3>
+          <p>Spicy questions, daring challenges, and playful connections await.</p>
+          <span class="cta">Play Now →</span>
+        </div>
+        <div onclick="showPage('rules')" class="glass-card activity-card">
+          <div class="icon">📜</div>
+          <h3>House Rules</h3>
+          <p>Our guidelines for a night of respect, consent, and unforgettable moments.</p>
+          <span class="cta">Read More →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- GUESTS PAGE -->
+  <section id="page-guests" class="page guests hidden">
+    <div class="guests-container">
+      <div class="guests-header">
+        <h1>Tonight's Guests</h1>
+        <p>The wonderful souls joining us this evening</p>
+        <div id="guestsCount" class="guests-count">Loading...</div>
+      </div>
+      <div id="guestsGrid" class="guests-grid"></div>
+      <div id="guestsEmpty" class="guests-empty hidden">
+        <div class="icon">👥</div>
+        <p>No guests have joined yet.<br>Be the first to complete your profile!</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Guest Profile Modal -->
+  <div id="guestModal" class="guest-modal hidden" onclick="closeGuestModal(event)">
+    <div class="glass-card guest-modal-card" onclick="event.stopPropagation()">
+      <button class="guest-modal-close" onclick="closeGuestModal()">&times;</button>
+      <div id="guestModalContent"></div>
+    </div>
+  </div>
+  
+  <!-- Notifications Panel -->
+  <div id="notificationsPanel" class="notifications-panel hidden">
+    <div class="notifications-header">
+      <h3>Notifications</h3>
+      <button class="notifications-close" onclick="toggleNotifications()">&times;</button>
+    </div>
+    <div id="notificationsList" class="notifications-list">
+      <div class="notifications-empty">
+        <div class="icon">🔔</div>
+        <p>No notifications yet</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- GAMES PAGE -->
+  <section id="page-games" class="page games hidden">
+    <div class="games-container">
+      <div class="games-header">
+        <h1>Party Games</h1>
+        <p>Choose your adventure for the evening</p>
+      </div>
+      
+      <!-- Games Hub -->
+      <div id="gamesHub" class="games-hub">
+        <div class="glass-card game-select-card" onclick="openGame('question')">
+          <span class="icon">💭</span>
+          <h3>Tonight's Question</h3>
+          <p>Deep conversation starters to spark connection</p>
+          <span class="vibe-tag">Thoughtful</span>
+        </div>
+        <div class="glass-card game-select-card" onclick="openGame('wyr')">
+          <span class="icon">⚖️</span>
+          <h3>Would You Rather</h3>
+          <p>Two tempting options, one impossible choice</p>
+          <span class="vibe-tag">Playful</span>
+        </div>
+        <div class="glass-card game-select-card" onclick="openGame('nhie')">
+          <span class="icon">🙈</span>
+          <h3>Never Have I Ever</h3>
+          <p>Confess what you have (or haven't) done</p>
+          <span class="vibe-tag">Revealing</span>
+        </div>
+        <div class="glass-card game-select-card" onclick="openGame('tod')">
+          <span class="icon">🎯</span>
+          <h3>Truth or Dare</h3>
+          <p>The classic game of revelations & adventures</p>
+          <span class="vibe-tag">Classic</span>
+        </div>
+      </div>
+      
+      <!-- Tonight's Question Game -->
+      <div id="game-question" class="game-view">
+        <button class="game-back-btn" onclick="closeGame()">← Back to Games</button>
+        <div class="glass-card game-card-full">
+          <div class="game-title"><span>💭</span><h2>Tonight's Question</h2></div>
+          <div class="tq-question-box">
+            <p id="tqQuestionText" class="tq-question">Loading...</p>
+          </div>
+          <textarea id="tqAnswerInput" placeholder="Share your thoughts..." class="input-elegant" style="width:100%; padding:1rem; border-radius:0.75rem; resize:none; height:100px; margin-bottom:1rem;"></textarea>
+          <div class="btn-row">
+            <button onclick="saveTQAnswer()" class="btn-gold">Save Answer</button>
+            <button onclick="nextTQQuestion()" class="btn-outline">New Question</button>
+          </div>
+          <div id="tqPreviousAnswer" class="previous-answers hidden">
+            <label>Your Previous Answer</label>
+            <div id="tqSavedAnswer" class="saved-answer"></div>
+          </div>
+          <p class="game-hint">✨ Share with someone nearby to spark conversation</p>
+        </div>
+      </div>
+      
+      <!-- Would You Rather Game -->
+      <div id="game-wyr" class="game-view">
+        <button class="game-back-btn" onclick="closeGame()">← Back to Games</button>
+        <div class="glass-card game-card-full">
+          <div class="game-title"><span>⚖️</span><h2>Would You Rather</h2></div>
+          <div class="wyr-container">
+            <div id="wyrOptionA" class="wyr-option" onclick="selectWYR('A')">
+              <span class="stats-percentage" id="wyrStatsA">0%</span>
+              <div class="label">Option A</div>
+              <div class="text" id="wyrTextA">Loading...</div>
+              <div class="stats-count" id="wyrCountA">0 votes</div>
+              <div class="stats-bar" id="wyrBarA"></div>
+            </div>
+            <div class="wyr-or">— or —</div>
+            <div id="wyrOptionB" class="wyr-option" onclick="selectWYR('B')">
+              <span class="stats-percentage" id="wyrStatsB">0%</span>
+              <div class="label">Option B</div>
+              <div class="text" id="wyrTextB">Loading...</div>
+              <div class="stats-count" id="wyrCountB">0 votes</div>
+              <div class="stats-bar" id="wyrBarB"></div>
+            </div>
+          </div>
+          <button onclick="nextWYR()" class="btn-outline" style="width:100%;">Next Dilemma</button>
+          <p class="game-hint">🔥 Tap an option to vote & see what others chose!</p>
+        </div>
+      </div>
+      
+      <!-- Never Have I Ever Game -->
+      <div id="game-nhie" class="game-view">
+        <button class="game-back-btn" onclick="closeGame()">← Back to Games</button>
+        <div class="glass-card game-card-full">
+          <div class="game-title"><span>🙈</span><h2>Never Have I Ever</h2></div>
+          <div class="nhie-statement-box">
+            <p class="nhie-statement"><strong>Never have I ever</strong> <span id="nhieStatement">Loading...</span></p>
+          </div>
+          <div class="nhie-response-btns">
+            <button id="nhieGuiltyBtn" class="nhie-btn guilty" onclick="respondNHIE('guilty')">
+              <span class="btn-text">🍷 I Have...</span>
+              <span class="btn-stats" id="nhieGuiltyStats">0 people</span>
+            </button>
+            <button id="nhieInnocentBtn" class="nhie-btn innocent" onclick="respondNHIE('innocent')">
+              <span class="btn-text">😇 Never!</span>
+              <span class="btn-stats" id="nhieInnocentStats">0 people</span>
+            </button>
+          </div>
+          <div id="nhieStatsSummary" class="nhie-stats-summary">
+            <div class="stat-label">Confession Rate</div>
+            <div class="stat-bar"><div class="stat-fill" id="nhieStatsFill" style="width:0%"></div></div>
+            <div class="stat-text" id="nhieStatsText">0% of guests have done this</div>
+          </div>
+          <button onclick="nextNHIE()" class="btn-outline" style="width:100%;">Next Statement</button>
+          <p class="game-hint">🥂 Be honest... we're all friends here!</p>
+        </div>
+      </div>
+      
+      <!-- Truth or Dare Game -->
+      <div id="game-tod" class="game-view">
+        <button class="game-back-btn" onclick="closeGame()">← Back to Games</button>
+        <div class="glass-card game-card-full">
+          <div class="game-title"><span>🎯</span><h2>Truth or Dare</h2></div>
+          <div class="tod-choice">
+            <div class="tod-choice-btn truth" onclick="chooseTOD('truth')">
+              <div class="icon">🔮</div>
+              <div class="label">Truth</div>
+              <div class="choice-stats" id="todTruthStats">0 chosen</div>
+            </div>
+            <div class="tod-choice-btn dare" onclick="chooseTOD('dare')">
+              <div class="icon">⚡</div>
+              <div class="label">Dare</div>
+              <div class="choice-stats" id="todDareStats">0 chosen</div>
+            </div>
+          </div>
+          <div id="todResultBox" class="tod-result-box empty">
+            <p class="prompt">Choose Truth or Dare above</p>
+          </div>
+          <div id="todCompletion" class="tod-completion hidden">
+            <button class="tod-completion-btn complete" onclick="completeTOD('completed')">✓ Did it!</button>
+            <button class="tod-completion-btn skip" onclick="completeTOD('skipped')">✗ Skipped</button>
+          </div>
+          <div id="todStatsRow" class="tod-stats-row">
+            <div class="tod-stat">
+              <div class="tod-stat-value" id="todCompletedCount">0</div>
+              <div class="tod-stat-label">Completed</div>
+            </div>
+            <div class="tod-stat">
+              <div class="tod-stat-value" id="todSkippedCount">0</div>
+              <div class="tod-stat-label">Skipped</div>
+            </div>
+            <div class="tod-stat">
+              <div class="tod-stat-value" id="todCompletionRate">0%</div>
+              <div class="tod-stat-label">Success Rate</div>
+            </div>
+          </div>
+          <button onclick="resetTOD()" class="btn-outline" style="width:100%;">Play Again</button>
+          <p class="game-hint">✨ All dares are invitations, never obligations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- RULES PAGE -->
+  <section id="page-rules" class="page rules hidden">
+    <div class="rules-container">
+      <div class="rules-header">
+        <h1>House Rules</h1>
+        <p>Guidelines for an unforgettable evening</p>
+      </div>
+      <div class="glass-card rules-card">
+        <div class="rule-item"><span class="icon">🤝</span><div><h3>Consent is Everything</h3><p>Ask before initiating any physical contact. "No" and "not right now" are complete sentences.</p></div></div>
+        <div class="rule-item"><span class="icon">🔒</span><div><h3>What Happens Here, Stays Here</h3><p>No photos or recordings without explicit permission. Respect everyone's privacy.</p></div></div>
+        <div class="rule-item"><span class="icon">🍸</span><div><h3>Drink Responsibly</h3><p>Enjoy yourself, but stay present. Impaired individuals cannot give meaningful consent.</p></div></div>
+        <div class="rule-item"><span class="icon">💬</span><div><h3>Communicate Openly</h3><p>Express your boundaries clearly. If something feels off, speak up or find a host.</p></div></div>
+        <div class="rule-item"><span class="icon">✨</span><div><h3>Embrace the Vibe</h3><p>Be playful, be curious, be kind. Leave judgment at the door.</p></div></div>
+        <div class="rules-footer">
+          <p>Questions? Find a host wearing a gold ribbon.</p>
+          <button onclick="showPage('lounge')" class="btn-gold">Back to Lounge</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ADMIN PAGE -->
+  <section id="page-admin" class="page admin hidden">
+    <div class="admin-container">
+      <div class="admin-header">
+        <h1>Admin Panel</h1>
+        <p>Manage party content and settings</p>
+      </div>
+      
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('questions')">Questions</button>
+        <button class="admin-tab" onclick="switchAdminTab('wyr')">WYR</button>
+        <button class="admin-tab" onclick="switchAdminTab('nhie')">NHIE</button>
+        <button class="admin-tab" onclick="switchAdminTab('truths')">Truths</button>
+        <button class="admin-tab" onclick="switchAdminTab('challenges')">Dares</button>
+        <button class="admin-tab" onclick="switchAdminTab('settings')">Settings</button>
+      </div>
+      
+      <!-- Questions Panel -->
+      <div id="admin-questions" class="admin-panel active">
+        <div id="questionsAdminList" class="admin-list"></div>
+        <div class="admin-add-form">
+          <textarea id="newQuestionInput" class="input-elegant" placeholder="Add a new conversation question..."></textarea>
+          <div class="admin-add-form-actions"><button onclick="addQuestion()" class="btn-gold">Add Question</button></div>
+        </div>
+      </div>
+      
+      <!-- Would You Rather Panel -->
+      <div id="admin-wyr" class="admin-panel">
+        <div id="wyrAdminList" class="admin-list"></div>
+        <div class="admin-add-form">
+          <div style="display:flex; flex-direction:column; gap:0.75rem; margin-bottom:0.75rem;">
+            <input type="text" id="newWyrOptionA" class="input-elegant" placeholder="Option A..." style="padding:0.75rem 1rem; border-radius:0.5rem;">
+            <input type="text" id="newWyrOptionB" class="input-elegant" placeholder="Option B..." style="padding:0.75rem 1rem; border-radius:0.5rem;">
+          </div>
+          <div class="admin-add-form-actions"><button onclick="addWYR()" class="btn-gold">Add Dilemma</button></div>
+        </div>
+      </div>
+      
+      <!-- Never Have I Ever Panel -->
+      <div id="admin-nhie" class="admin-panel">
+        <div id="nhieAdminList" class="admin-list"></div>
+        <div class="admin-add-form">
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.75rem;">
+            <span style="color:var(--champagne); font-weight:500; white-space:nowrap;">Never have I ever</span>
+            <input type="text" id="newNhieStatement" class="input-elegant" placeholder="done something wild..." style="flex:1; padding:0.75rem 1rem; border-radius:0.5rem;">
+          </div>
+          <div class="admin-add-form-actions"><button onclick="addNHIE()" class="btn-gold">Add Statement</button></div>
+        </div>
+      </div>
+      
+      <!-- Truths Panel -->
+      <div id="admin-truths" class="admin-panel">
+        <div id="truthsAdminList" class="admin-list"></div>
+        <div class="admin-add-form">
+          <textarea id="newTruthInput" class="input-elegant" placeholder="Add a new truth question..."></textarea>
+          <div class="admin-add-form-actions"><button onclick="addTruth()" class="btn-gold">Add Truth</button></div>
+        </div>
+      </div>
+      
+      <!-- Challenges/Dares Panel -->
+      <div id="admin-challenges" class="admin-panel">
+        <div id="challengesAdminList" class="admin-list"></div>
+        <div class="admin-add-form">
+          <textarea id="newChallengeInput" class="input-elegant" placeholder="Add a new dare..."></textarea>
+          <div class="admin-add-form-actions"><button onclick="addChallenge()" class="btn-gold">Add Dare</button></div>
+        </div>
+      </div>
+      
+      <!-- Settings Panel -->
+      <div id="admin-settings" class="admin-panel">
+        <div class="admin-settings-group">
+          <label>Event Name</label>
+          <input type="text" id="settingsEventName" class="input-elegant" placeholder="The Velvet Winter Lounge">
+          <p class="hint">Displayed on the landing page</p>
+        </div>
+        <div class="admin-settings-group">
+          <label>Event Tagline</label>
+          <input type="text" id="settingsEventTagline" class="input-elegant" placeholder="An evening of warmth, connection & playful elegance">
+        </div>
+        <div class="admin-settings-group">
+          <label>Event Date & Time</label>
+          <input type="datetime-local" id="settingsEventDate" class="input-elegant">
+          <p class="hint">Used for the countdown timer on landing page</p>
+        </div>
+        <div class="admin-settings-group">
+          <label>Admin Emails (comma-separated)</label>
+          <input type="text" id="settingsAdminEmails" class="input-elegant" placeholder="admin@example.com, host@example.com">
+          <p class="hint">Users with these emails can access the admin panel</p>
+        </div>
+        <button onclick="saveSettings()" class="btn-gold" style="width:100%; margin-top:1rem; padding:1rem; border-radius:0.75rem;">Save Settings</button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Edit Modal -->
+  <div id="editModal" class="edit-modal hidden" onclick="closeEditModal(event)">
+    <div class="glass-card edit-modal-card" onclick="event.stopPropagation()">
+      <h3 id="editModalTitle">Edit Item</h3>
+      <textarea id="editModalInput" class="input-elegant" placeholder="Enter text..."></textarea>
+      <div class="edit-modal-actions">
+        <button onclick="closeEditModal()" class="btn-outline">Cancel</button>
+        <button onclick="saveEditModal()" class="btn-gold">Save</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Consent Modal -->
+  <div id="consentModal" class="modal-overlay hidden">
+    <div class="glass-card modal-card">
+      <div class="modal-header">
+        <div class="icon">✧</div>
+        <h2>Welcome, Beautiful Soul</h2>
+        <p>Please acknowledge our community guidelines</p>
+      </div>
+      <div class="modal-content">
+        <p>By entering The Velvet Winter Lounge, I agree to:</p>
+        <ul>
+          <li>Respect all guests and their boundaries</li>
+          <li>Practice enthusiastic, ongoing consent</li>
+          <li>Maintain discretion about attendees</li>
+          <li>Be responsible for my own comfort and safety</li>
+          <li>Communicate openly and honestly</li>
+        </ul>
+      </div>
+      <button onclick="acceptConsent()" class="btn-gold">I Understand & Agree</button>
+      <p class="modal-hint">Must be 21+ to enter</p>
+    </div>
+  </div>
+
+  <!-- JavaScript Files (order matters!) -->
+  <script src="debug.js"></script>
+  <script src="config.js" onerror="console.log('config.js not found, using inline config')"></script>
+  <script src="core.js"></script>
+  <script src="social.js"></script>
+  <script src="games.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
