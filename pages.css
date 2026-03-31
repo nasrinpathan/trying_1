@@ -1,0 +1,941 @@
+/* ============================================
+   PAGES STYLES
+   Auth, Landing, Lounge, Rules, Consent Modal
+   ============================================ */
+
+/* ============================================
+   AUTH PAGE
+   ============================================ */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.auth-container {
+  max-width: 420px;
+  width: 100%;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-header .icon {
+  color: rgba(212, 165, 116, 0.5);
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.auth-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-header h1 span {
+  color: var(--champagne);
+}
+
+.auth-header p {
+  color: rgba(245, 240, 232, 0.5);
+  font-size: 0.95rem;
+}
+
+.auth-card {
+  padding: 2rem;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  background: rgba(10, 10, 15, 0.5);
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  color: rgba(245, 240, 232, 0.5);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+}
+
+.auth-tab.active {
+  background: var(--champagne);
+  color: var(--velvet);
+  font-weight: 600;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form.hidden {
+  display: none;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  color: rgba(245, 240, 232, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+}
+
+.auth-form button[type="submit"] {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  color: rgba(245, 240, 232, 0.3);
+  font-size: 0.8rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(212, 165, 116, 0.15);
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn-guest {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(212, 165, 116, 0.3);
+  color: var(--cream);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-guest:hover {
+  background: rgba(212, 165, 116, 0.1);
+}
+
+.btn-google {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: 0.75rem;
+  background: #fff;
+  border: none;
+  color: #333;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.btn-google:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+}
+
+.btn-google:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-google svg {
+  width: 20px;
+  height: 20px;
+}
+
+.auth-error {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  color: var(--error);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.auth-error.hidden {
+  display: none;
+}
+
+/* ============================================
+   LANDING PAGE
+   ============================================ */
+.landing {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.landing-content {
+  max-width: 600px;
+}
+
+.landing-icon {
+  color: rgba(212, 165, 116, 0.3);
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.landing h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.landing h1 span {
+  color: var(--champagne);
+}
+
+.landing-tagline {
+  color: rgba(245, 240, 232, 0.6);
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.landing-date {
+  color: rgba(212, 165, 116, 0.7);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 3rem;
+}
+
+.landing .btn-gold {
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.landing-hint {
+  color: rgba(245, 240, 232, 0.3);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  margin-top: 2rem;
+}
+
+/* Countdown */
+.countdown-container {
+  margin: 2rem 0 2.5rem;
+}
+
+.countdown-label {
+  color: rgba(245, 240, 232, 0.5);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 1rem;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  background: rgba(26, 26, 36, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 165, 116, 0.2);
+  border-radius: 0.75rem;
+  padding: 1rem 0.5rem;
+  min-width: 70px;
+  text-align: center;
+}
+
+.countdown-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--champagne);
+  line-height: 1;
+}
+
+.countdown-unit {
+  font-size: 0.7rem;
+  color: rgba(245, 240, 232, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+}
+
+.countdown-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  color: #4ade80;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  margin: 2rem 0;
+}
+
+.countdown-live-dot {
+  width: 8px;
+  height: 8px;
+  background: #4ade80;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+.countdown-ended {
+  color: rgba(245, 240, 232, 0.5);
+  font-size: 1rem;
+  font-style: italic;
+  margin: 2rem 0;
+}
+
+.snowflake {
+  position: absolute;
+  color: rgba(245, 240, 232, 0.1);
+  font-size: 2rem;
+  animation: drift 20s infinite linear;
+}
+
+@keyframes drift {
+  0% { transform: translateX(0) rotate(0deg); }
+  100% { transform: translateX(-20px) rotate(360deg); }
+}
+
+/* ============================================
+   LOUNGE PAGE
+   ============================================ */
+.lounge {
+  min-height: 100vh;
+  padding: 7rem 1.5rem 3rem;
+}
+
+.lounge-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.lounge-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.lounge-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.greeting {
+  color: var(--champagne);
+  font-size: 1.25rem;
+}
+
+.lounge-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--champagne);
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.lounge-avatar.hidden {
+  display: none;
+}
+
+/* Profile Card */
+.profile-card {
+  max-width: 400px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+}
+
+.profile-card.hidden {
+  display: none;
+}
+
+.profile-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.profile-card > p {
+  color: rgba(245, 240, 232, 0.5);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-card input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.profile-card button {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Avatar Upload */
+.avatar-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.avatar-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid var(--champagne);
+  object-fit: cover;
+  background: var(--charcoal);
+  margin-bottom: 1rem;
+}
+
+.avatar-preview.hidden {
+  display: none;
+}
+
+.avatar-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px dashed rgba(212, 165, 116, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: rgba(212, 165, 116, 0.4);
+  margin-bottom: 1rem;
+  background: var(--charcoal);
+}
+
+.avatar-placeholder.hidden {
+  display: none;
+}
+
+.avatar-upload-btn {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: 1px solid rgba(212, 165, 116, 0.4);
+  color: var(--champagne);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.avatar-upload-btn:hover {
+  background: rgba(212, 165, 116, 0.1);
+}
+
+.avatar-upload-btn input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.avatar-upload-btn.uploading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.avatar-upload-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(212, 165, 116, 0.2);
+  border-radius: 2px;
+  margin-top: 0.75rem;
+  overflow: hidden;
+}
+
+.avatar-upload-progress.hidden {
+  display: none;
+}
+
+.avatar-upload-progress-bar {
+  height: 100%;
+  background: var(--champagne);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+/* Activity Cards */
+.activity-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.activity-cards.hidden {
+  display: none;
+}
+
+.activity-card {
+  padding: 2rem;
+  cursor: pointer;
+}
+
+.activity-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  transition: transform 0.3s;
+}
+
+.activity-card:hover .icon {
+  transform: scale(1.15);
+}
+
+.activity-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.activity-card p {
+  color: rgba(245, 240, 232, 0.5);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.activity-card .cta {
+  color: var(--champagne);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: transform 0.3s;
+  display: inline-block;
+}
+
+.activity-card:hover .cta {
+  transform: translateX(8px);
+}
+
+/* ============================================
+   RULES PAGE
+   ============================================ */
+.rules {
+  min-height: 100vh;
+  padding: 7rem 1.5rem 3rem;
+}
+
+.rules-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.rules-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.rules-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.rules-header p {
+  color: rgba(245, 240, 232, 0.5);
+}
+
+.rules-card {
+  padding: 2rem 2.5rem;
+}
+
+.rule-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.rule-item:last-child {
+  margin-bottom: 0;
+}
+
+.rule-item .icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.rule-item h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--champagne);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.rule-item p {
+  color: rgba(245, 240, 232, 0.6);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.rules-footer {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(212, 165, 116, 0.1);
+  text-align: center;
+}
+
+.rules-footer p {
+  color: rgba(245, 240, 232, 0.4);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.rules-footer .btn-gold {
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   CONSENT MODAL
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-card {
+  max-width: 480px;
+  width: 100%;
+  padding: 2.5rem;
+  border-color: rgba(212, 165, 116, 0.3);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-header .icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-header p {
+  color: rgba(245, 240, 232, 0.5);
+  font-size: 0.85rem;
+}
+
+.modal-content {
+  background: rgba(10, 10, 15, 0.5);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-content p {
+  color: rgba(245, 240, 232, 0.7);
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.modal-content ul {
+  list-style: none;
+  margin-left: 1rem;
+}
+
+.modal-content li {
+  color: rgba(245, 240, 232, 0.7);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-content li::before {
+  content: '•';
+  color: var(--champagne);
+  margin-right: 0.5rem;
+}
+
+.modal-card .btn-gold {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+}
+
+.modal-hint {
+  color: rgba(245, 240, 232, 0.3);
+  font-size: 0.75rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* ============================================
+   LANDING PAGE MOBILE FIX
+   Add/update these styles in pages.css
+   ============================================ */
+
+/* Ensure landing content is above decorative elements */
+.landing-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Snowflakes should not block clicks */
+.snowflake {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure button is clickable */
+.landing .btn-gold {
+  position: relative;
+  z-index: 20;
+  /* Larger tap target on mobile */
+  min-height: 48px;
+  min-width: 200px;
+}
+
+/* Countdown container shouldn't block the button */
+.countdown-container {
+  position: relative;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* But countdown items inside can be interactive if needed */
+.countdown-container * {
+  pointer-events: auto;
+}
+
+/* Mobile-specific landing adjustments */
+@media (max-width: 768px) {
+  .landing {
+    padding: 1rem;
+    padding-top: 4rem; /* Account for fixed nav */
+  }
+  
+  .landing-content {
+    padding: 1rem;
+    /* Ensure content doesn't overflow */
+    max-width: 100%;
+    overflow: visible;
+  }
+  
+  .landing .btn-gold {
+    /* Larger tap target */
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    width: auto;
+    max-width: 90%;
+    /* Ensure it's not cut off */
+    margin: 1.5rem auto;
+    display: block;
+  }
+  
+  /* Smaller countdown on mobile */
+  .countdown-container {
+    transform: scale(0.85);
+    margin: 1rem 0;
+  }
+  
+  /* Move snowflakes away from interactive areas */
+  .snowflake {
+    opacity: 0.3;
+  }
+}
+
+/* ============================================
+   LANDING PAGE & GLOBAL MOBILE FIXES
+   Add these to your CSS (base.css or pages.css)
+   ============================================ */
+
+/* CRITICAL: Particles must not block clicks */
+.bg-particles {
+  pointer-events: none !important;
+}
+
+.particle {
+  pointer-events: none !important;
+}
+
+/* CRITICAL: Nav drawer overlay must be truly hidden when not active */
+.nav-drawer-overlay {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.nav-drawer-overlay.active {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+/* Snowflakes should not block clicks */
+.snowflake {
+  pointer-events: none !important;
+  z-index: 1;
+}
+
+/* Ensure all page content is above decorative elements */
+.page {
+  position: relative;
+  z-index: 10;
+}
+
+/* Landing page specifics */
+.landing-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure button is definitely clickable */
+.landing .btn-gold {
+  position: relative;
+  z-index: 100;
+  cursor: pointer;
+  /* Larger tap target on mobile */
+  min-height: 48px;
+  padding: 1rem 2rem;
+}
+
+/* Countdown container shouldn't block the button */
+.countdown-container {
+  position: relative;
+  z-index: 5;
+}
+
+/* Toast container shouldn't block content */
+.toast-container {
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+}
+
+/* Debug console shouldn't block anything */
+.debug-console {
+  pointer-events: auto;
+}
+
+.show-console-btn {
+  pointer-events: auto;
+}
+
+/* ============================================
+   MOBILE-SPECIFIC FIXES
+   ============================================ */
+@media (max-width: 768px) {
+  .landing {
+    padding: 1rem;
+    padding-top: 5rem;
+  }
+  
+  .landing-content {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  
+  .landing .btn-gold {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    margin: 1.5rem auto;
+    display: inline-block;
+    /* Force clickability */
+    -webkit-tap-highlight-color: rgba(212, 165, 116, 0.3);
+    touch-action: manipulation;
+  }
+  
+  .countdown-container {
+    transform: scale(0.85);
+    margin: 1rem 0;
+  }
+  
+  .snowflake {
+    opacity: 0.3;
+  }
+}
