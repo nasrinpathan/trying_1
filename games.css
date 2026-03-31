@@ -1,0 +1,1275 @@
+/* ============================================
+   GAMES & ADMIN STYLES
+   Games Hub, All 4 Games, Admin Panel, Edit Modal
+   ============================================ */
+
+/* ============================================
+   GAMES PAGE
+   ============================================ */
+.games {
+  min-height: 100vh;
+  padding: 7rem 1.5rem 3rem;
+}
+
+.games-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.games-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.games-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.games-header p {
+  color: rgba(245, 240, 232, 0.5);
+}
+
+/* Games Hub */
+.games-hub {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.game-select-card {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-select-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(212, 165, 116, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.game-select-card:hover::before {
+  opacity: 1;
+}
+
+.game-select-card .icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.game-select-card:hover .icon {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.game-select-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+
+.game-select-card p {
+  font-size: 0.8rem;
+  color: rgba(245, 240, 232, 0.5);
+  line-height: 1.4;
+}
+
+.game-select-card .vibe-tag {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(212, 165, 116, 0.15);
+  border: 1px solid rgba(212, 165, 116, 0.2);
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  color: var(--champagne);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Game Views */
+.game-view {
+  display: none;
+  max-width: 500px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease;
+}
+
+.game-view.active {
+  display: block;
+}
+
+.game-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--champagne);
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 0;
+  transition: transform 0.2s;
+  font-family: inherit;
+}
+
+.game-back-btn:hover {
+  transform: translateX(-4px);
+}
+
+.game-card-full {
+  padding: 2rem;
+}
+
+.game-card-full .game-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.game-card-full .game-title span {
+  font-size: 2rem;
+}
+
+.game-card-full .game-title h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--cream);
+}
+
+.game-hint {
+  text-align: center;
+  color: rgba(245, 240, 232, 0.3);
+  font-size: 0.75rem;
+  margin-top: 1rem;
+}
+
+.previous-answers {
+  margin-top: 1.5rem;
+}
+
+.previous-answers.hidden {
+  display: none;
+}
+
+.previous-answers label {
+  color: rgba(245, 240, 232, 0.4);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.saved-answer {
+  color: rgba(245, 240, 232, 0.6);
+  font-size: 0.85rem;
+  background: rgba(10, 10, 15, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+/* ============================================
+   TONIGHT'S QUESTION
+   ============================================ */
+.tq-question-box {
+  background: linear-gradient(135deg, rgba(26, 26, 36, 0.9) 0%, rgba(10, 10, 15, 0.9) 100%);
+  border: 1px solid rgba(212, 165, 116, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.tq-question-box::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-size: 6rem;
+  color: rgba(212, 165, 116, 0.1);
+  font-family: 'Playfair Display', serif;
+}
+
+.tq-question {
+  font-size: 1.15rem;
+  color: var(--cream);
+  line-height: 1.6;
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   WOULD YOU RATHER
+   ============================================ */
+.wyr-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.wyr-option {
+  background: rgba(10, 10, 15, 0.5);
+  border: 2px solid rgba(212, 165, 116, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.wyr-option:hover:not(.locked) {
+  border-color: var(--champagne);
+  background: rgba(212, 165, 116, 0.1);
+  transform: scale(1.02);
+}
+
+.wyr-option.selected {
+  border-color: var(--champagne);
+  background: linear-gradient(135deg, rgba(212, 165, 116, 0.2) 0%, rgba(114, 47, 55, 0.2) 100%);
+}
+
+.wyr-option.locked {
+  cursor: default;
+}
+
+.wyr-option.locked:not(.selected) {
+  opacity: 0.6;
+}
+
+.wyr-option .label {
+  font-size: 0.7rem;
+  color: var(--champagne);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.wyr-option .text {
+  font-size: 1.1rem;
+  color: var(--cream);
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+.wyr-or {
+  text-align: center;
+  color: rgba(245, 240, 232, 0.3);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  position: relative;
+}
+
+.wyr-or::before,
+.wyr-or::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 1px;
+  background: rgba(212, 165, 116, 0.15);
+}
+
+.wyr-or::before { left: 0; }
+.wyr-or::after { right: 0; }
+
+/* Stats Bar */
+.stats-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--champagne), var(--rose));
+  border-radius: 0 0 0.75rem 0.75rem;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0;
+}
+
+.wyr-option.show-stats .stats-bar {
+  opacity: 1;
+}
+
+.stats-percentage {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--champagne);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.wyr-option.show-stats .stats-percentage {
+  opacity: 1;
+}
+
+.stats-count {
+  font-size: 0.75rem;
+  color: rgba(245, 240, 232, 0.5);
+  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.wyr-option.show-stats .stats-count {
+  opacity: 1;
+}
+
+/* ============================================
+   NEVER HAVE I EVER
+   ============================================ */
+.nhie-statement-box {
+  background: linear-gradient(135deg, var(--burgundy) 0%, var(--charcoal) 100%);
+  border: 1px solid rgba(212, 165, 116, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nhie-statement {
+  font-size: 1.2rem;
+  color: var(--cream);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.nhie-statement strong {
+  color: var(--champagne);
+  font-style: normal;
+}
+
+.nhie-response-btns {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.nhie-btn {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.nhie-btn.guilty {
+  background: rgba(212, 165, 116, 0.2);
+  border-color: rgba(212, 165, 116, 0.4);
+  color: var(--champagne);
+}
+
+.nhie-btn.guilty:hover:not(.locked),
+.nhie-btn.guilty.selected {
+  background: var(--champagne);
+  color: var(--velvet);
+}
+
+.nhie-btn.innocent {
+  background: rgba(201, 160, 160, 0.15);
+  border-color: rgba(201, 160, 160, 0.3);
+  color: var(--rose);
+}
+
+.nhie-btn.innocent:hover:not(.locked),
+.nhie-btn.innocent.selected {
+  background: var(--rose);
+  color: var(--velvet);
+}
+
+.nhie-btn.locked {
+  cursor: default;
+}
+
+.nhie-btn.locked:not(.selected) {
+  opacity: 0.5;
+}
+
+.nhie-btn .btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+.nhie-btn .btn-stats {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.nhie-btn.show-stats .btn-stats {
+  opacity: 0.8;
+}
+
+/* NHIE Stats Summary */
+.nhie-stats-summary {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(10, 10, 15, 0.4);
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.nhie-stats-summary.show {
+  opacity: 1;
+  height: auto;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.nhie-stats-summary .stat-label {
+  color: rgba(245, 240, 232, 0.5);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.nhie-stats-summary .stat-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.nhie-stats-summary .stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--champagne), var(--rose));
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nhie-stats-summary .stat-text {
+  color: var(--cream);
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   TRUTH OR DARE
+   ============================================ */
+.tod-choice {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tod-choice-btn {
+  flex: 1;
+  padding: 1.5rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.tod-choice-btn.truth {
+  background: linear-gradient(135deg, rgba(100, 149, 237, 0.2) 0%, rgba(26, 26, 36, 0.8) 100%);
+  border-color: rgba(100, 149, 237, 0.3);
+}
+
+.tod-choice-btn.truth:hover,
+.tod-choice-btn.truth.active {
+  border-color: cornflowerblue;
+  transform: scale(1.02);
+}
+
+.tod-choice-btn.dare {
+  background: linear-gradient(135deg, rgba(220, 20, 60, 0.2) 0%, rgba(26, 26, 36, 0.8) 100%);
+  border-color: rgba(220, 20, 60, 0.3);
+}
+
+.tod-choice-btn.dare:hover,
+.tod-choice-btn.dare.active {
+  border-color: crimson;
+  transform: scale(1.02);
+}
+
+.tod-choice-btn .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tod-choice-btn .label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--cream);
+}
+
+.tod-choice-btn .choice-stats {
+  font-size: 0.7rem;
+  color: rgba(245, 240, 232, 0.5);
+  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tod-choice-btn.show-stats .choice-stats {
+  opacity: 1;
+}
+
+.tod-result-box {
+  background: rgba(10, 10, 15, 0.6);
+  border: 1px solid rgba(212, 165, 116, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.tod-result-box.empty {
+  border-style: dashed;
+}
+
+.tod-result-box .prompt {
+  color: rgba(245, 240, 232, 0.4);
+  font-size: 0.9rem;
+}
+
+.tod-result-box .result {
+  font-size: 1.15rem;
+  color: var(--cream);
+  line-height: 1.5;
+}
+
+.tod-result-box .type-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.tod-result-box .type-badge.truth {
+  background: rgba(100, 149, 237, 0.2);
+  color: cornflowerblue;
+}
+
+.tod-result-box .type-badge.dare {
+  background: rgba(220, 20, 60, 0.2);
+  color: crimson;
+}
+
+/* ToD Completion Buttons */
+.tod-completion {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.tod-completion.hidden {
+  display: none;
+}
+
+.tod-completion-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  border: 2px solid transparent;
+}
+
+.tod-completion-btn.complete {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: rgba(74, 222, 128, 0.3);
+  color: #4ade80;
+}
+
+.tod-completion-btn.complete:hover,
+.tod-completion-btn.complete.selected {
+  background: #4ade80;
+  color: var(--velvet);
+}
+
+.tod-completion-btn.skip {
+  background: rgba(248, 113, 113, 0.15);
+  border-color: rgba(248, 113, 113, 0.3);
+  color: #f87171;
+}
+
+.tod-completion-btn.skip:hover,
+.tod-completion-btn.skip.selected {
+  background: #f87171;
+  color: var(--velvet);
+}
+
+.tod-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0.75rem;
+  background: rgba(10, 10, 15, 0.4);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tod-stats-row.show {
+  opacity: 1;
+}
+
+.tod-stat {
+  text-align: center;
+}
+
+.tod-stat-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--champagne);
+}
+
+.tod-stat-label {
+  font-size: 0.7rem;
+  color: rgba(245, 240, 232, 0.5);
+  text-transform: uppercase;
+}
+
+/* ============================================
+   ADMIN PAGE
+   ============================================ */
+.admin {
+  min-height: 100vh;
+  padding: 7rem 1.5rem 3rem;
+}
+
+.admin-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.admin-header p {
+  color: rgba(245, 240, 232, 0.5);
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  background: rgba(10, 10, 15, 0.5);
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+}
+
+.admin-tab {
+  flex: 1;
+  min-width: 80px;
+  padding: 0.6rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: rgba(245, 240, 232, 0.5);
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+}
+
+.admin-tab.active {
+  background: var(--champagne);
+  color: var(--velvet);
+  font-weight: 600;
+}
+
+.admin-tab:hover:not(.active) {
+  color: var(--cream);
+}
+
+.admin-panel {
+  display: none;
+}
+
+.admin-panel.active {
+  display: block;
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26, 26, 36, 0.7);
+  border: 1px solid rgba(212, 165, 116, 0.15);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+}
+
+.admin-item-order {
+  color: rgba(212, 165, 116, 0.5);
+  font-size: 0.8rem;
+  min-width: 24px;
+}
+
+.admin-item-text {
+  flex: 1;
+  color: var(--cream);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.admin-item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-item-btn {
+  background: transparent;
+  border: 1px solid rgba(212, 165, 116, 0.3);
+  color: var(--champagne);
+  width: 32px;
+  height: 32px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-item-btn:hover {
+  background: rgba(212, 165, 116, 0.15);
+}
+
+.admin-item-btn.delete {
+  border-color: rgba(248, 113, 113, 0.3);
+  color: #f87171;
+}
+
+.admin-item-btn.delete:hover {
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.admin-add-form {
+  background: rgba(26, 26, 36, 0.5);
+  border: 1px dashed rgba(212, 165, 116, 0.3);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+
+.admin-add-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  resize: none;
+  height: 80px;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.admin-add-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.admin-add-form button {
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.admin-settings-group {
+  background: rgba(26, 26, 36, 0.7);
+  border: 1px solid rgba(212, 165, 116, 0.15);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-settings-group label {
+  display: block;
+  color: rgba(245, 240, 232, 0.6);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.admin-settings-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.admin-settings-group .hint {
+  color: rgba(245, 240, 232, 0.4);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.admin-empty {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(245, 240, 232, 0.4);
+}
+
+/* ============================================
+   EDIT MODAL
+   ============================================ */
+.edit-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.edit-modal.hidden {
+  display: none;
+}
+
+.edit-modal-card {
+  max-width: 500px;
+  width: 100%;
+  padding: 2rem;
+  border-color: rgba(212, 165, 116, 0.3);
+}
+
+.edit-modal-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--cream);
+}
+
+.edit-modal-card textarea {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  resize: none;
+  height: 120px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.edit-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.edit-modal-actions button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+/* ============================================
+   RESPONSIVE - GAMES & ADMIN
+   ============================================ */
+@media (max-width: 640px) {
+  .games-hub {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .game-select-card {
+    padding: 1.25rem 1rem;
+  }
+  
+  .game-select-card .icon {
+    font-size: 2rem;
+  }
+  
+  .game-select-card h3 {
+    font-size: 1rem;
+  }
+  
+  .admin-tabs {
+    gap: 0.15rem;
+  }
+  
+  .admin-tab {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.25rem;
+    min-width: 60px;
+  }
+}
+
+/* ============================================
+   GAMES CSS - Achievement & Stats Additions
+   Add these to your games.css file
+   ============================================ */
+
+/* ============================================
+   WYR - Stats Display
+   ============================================ */
+.wyr-option {
+  position: relative;
+  overflow: hidden;
+}
+
+.wyr-option .stats-percentage {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--champagne);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.4s ease;
+}
+
+.wyr-option .stats-count {
+  font-size: 0.75rem;
+  color: rgba(245, 240, 232, 0.5);
+  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.wyr-option .stats-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--champagne), var(--rose));
+  width: 0;
+  transition: width 0.6s ease;
+  border-radius: 0 2px 0 0;
+}
+
+.wyr-option.show-stats .stats-percentage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.wyr-option.show-stats .stats-count {
+  opacity: 1;
+}
+
+.wyr-option.selected {
+  border-color: var(--champagne);
+  box-shadow: 0 0 30px rgba(212, 165, 116, 0.3);
+}
+
+.wyr-option.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--champagne);
+  color: var(--velvet);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* ============================================
+   NHIE - Stats Display
+   ============================================ */
+.nhie-btn.selected {
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(212, 165, 116, 0.3);
+}
+
+.nhie-btn.selected.guilty {
+  border-color: var(--burgundy);
+  background: linear-gradient(135deg, rgba(114, 47, 55, 0.4) 0%, rgba(114, 47, 55, 0.2) 100%);
+}
+
+.nhie-btn.selected.innocent {
+  border-color: var(--success);
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(74, 222, 128, 0.1) 100%);
+}
+
+.nhie-stats-summary {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.nhie-stats-summary.visible {
+  opacity: 1;
+}
+
+/* ============================================
+   TOD - Result Badges
+   ============================================ */
+.tod-result-badge {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  animation: popIn 0.3s ease;
+}
+
+.tod-result-badge.success {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.3) 0%, rgba(74, 222, 128, 0.1) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.5);
+  color: #4ade80;
+}
+
+.tod-result-badge.skipped {
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  color: #f87171;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tod-type {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 1rem;
+  display: inline-block;
+}
+
+.tod-type.truth {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3) 0%, rgba(138, 43, 226, 0.1) 100%);
+  border: 1px solid rgba(138, 43, 226, 0.4);
+  color: #a855f7;
+}
+
+.tod-type.dare {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.1) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: #fbbf24;
+}
+
+.tod-content {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--cream);
+}
+
+/* ============================================
+   Achievement Toast Enhancement
+   ============================================ */
+.toast.achievement {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: var(--velvet);
+  font-weight: 600;
+}
+
+.toast.achievement::before {
+  content: '🏆';
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* ============================================
+   Game Stats in Profile (Optional Display)
+   ============================================ */
+.profile-game-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.profile-game-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(10, 10, 15, 0.4);
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.profile-game-stat .stat-icon {
+  font-size: 1rem;
+}
+
+.profile-game-stat .stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-game-stat .stat-value {
+  color: var(--champagne);
+  font-weight: 600;
+}
+
+.profile-game-stat .stat-label {
+  color: rgba(245, 240, 232, 0.5);
+  font-size: 0.65rem;
+}
+
+/* ============================================
+   Progress Indicators for Achievements
+   ============================================ */
+.achievement-progress {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(10, 10, 15, 0.4);
+  border: 1px solid rgba(212, 165, 116, 0.15);
+  border-radius: 0.75rem;
+}
+
+.achievement-progress-title {
+  font-size: 0.7rem;
+  color: var(--champagne);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.achievement-progress-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+}
+
+.achievement-progress-item:last-child {
+  border-bottom: none;
+}
+
+.achievement-progress-item .progress-icon {
+  font-size: 1.25rem;
+  opacity: 0.5;
+}
+
+.achievement-progress-item.unlocked .progress-icon {
+  opacity: 1;
+}
+
+.achievement-progress-item .progress-info {
+  flex: 1;
+}
+
+.achievement-progress-item .progress-name {
+  font-size: 0.85rem;
+  color: var(--cream);
+}
+
+.achievement-progress-item.unlocked .progress-name {
+  color: var(--champagne);
+}
+
+.achievement-progress-item .progress-bar-container {
+  height: 4px;
+  background: rgba(212, 165, 116, 0.2);
+  border-radius: 2px;
+  margin-top: 0.25rem;
+  overflow: hidden;
+}
+
+.achievement-progress-item .progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--champagne), var(--rose));
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.achievement-progress-item .progress-text {
+  font-size: 0.7rem;
+  color: rgba(245, 240, 232, 0.5);
+  text-align: right;
+  min-width: 40px;
+}
+
+.achievement-progress-item.unlocked .progress-text {
+  color: var(--success);
+}
