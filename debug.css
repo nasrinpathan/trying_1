@@ -1,0 +1,105 @@
+/* ============================================
+   DEBUG CONSOLE
+   Dev tool for logging and error tracking
+   ============================================ */
+
+.debug-console {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.95);
+  border-top: 1px solid #333;
+  max-height: 40vh;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.debug-console.hidden {
+  display: none;
+}
+
+.debug-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+  position: sticky;
+  top: 0;
+}
+
+.debug-header span {
+  color: #4ade80;
+  font-weight: bold;
+}
+
+.debug-header button {
+  background: #333;
+  border: none;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+.debug-header button:hover {
+  background: #444;
+}
+
+.debug-logs {
+  padding: 8px 12px;
+}
+
+.debug-log {
+  padding: 4px 0;
+  border-bottom: 1px solid #222;
+  color: #ccc;
+  word-break: break-all;
+}
+
+.debug-log.error {
+  color: #f87171;
+}
+
+.debug-log.success {
+  color: #4ade80;
+}
+
+.debug-log.info {
+  color: #60a5fa;
+}
+
+.debug-log .time {
+  color: #666;
+  margin-right: 8px;
+}
+
+/* Show Console Button */
+.show-console-btn {
+  position: fixed;
+  bottom: 60px;
+  right: 10px;
+  z-index: 299;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #4ade80;
+  color: #4ade80;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.show-console-btn:hover {
+  background: rgba(74, 222, 128, 0.2);
+}
+
+.show-console-btn.hidden {
+  display: none;
+}
