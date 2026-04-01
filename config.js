@@ -1,5 +1,5 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyCpZDkAAEwC8JGGRkSVfg6EX7eY3OE1Dms",
+  apiKey: "AIzaSyDUmaFB6xwl9r6CPDF42J0xrIB-sJ9TKpY",
   authDomain: "thesecretroom-b27e4.firebaseapp.com",
   databaseURL: "https://thesecretroom-b27e4-default-rtdb.firebaseio.com",
   projectId: "thesecretroom-b27e4",
